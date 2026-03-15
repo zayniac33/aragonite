@@ -1,16 +1,19 @@
 *.iml
 .gradle
 /local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
+local.properties
+
+# IDE — only keep codeStyle and inspectionProfiles (shared team settings)
+/.idea/*
+!/.idea/codeStyles
+!/.idea/inspectionProfiles
+
 .DS_Store
 /build
 /captures
 .externalNativeBuild
 .cxx
-local.properties
 *.jks
+
+# Gradle daemon config (machine-specific)
+gradle/gradle-daemon-jvm.properties
