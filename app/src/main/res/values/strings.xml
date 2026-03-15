@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">Notable</string>
+    <string name="app_name" translatable="false">Aragonite</string>
     <string name="home_quick_pages">Quick pages</string>
     <string name="home_notebooks">Notebooks</string>
     <string name="home_add_new_folder">Add new folder</string>
@@ -23,7 +23,7 @@
     <string name="monochrome_mode">Monochrome mode</string>
     <string name="paginate_pdf">Paginate PDF</string>
     <string name="preview_pdf_pagination">Preview PDF Pagination</string>
-    <string name="app_new_version">It seems a new version of Notable is available on GitHub!</string>
+    <string name="app_new_version">It seems a new version of Aragonite is available on GitHub!</string>
     <string name="app_see_release">See release in browser</string>
     <string name="app_latest_version">You are on the latest version.</string>
     <string name="app_check_updates">Check for newer version</string>
@@ -56,7 +56,7 @@
     <string name="details_notebook_buttons_export">Export</string>
     <string name="details_notebook_buttons_copy">Copy</string>
     <string name="details_notebook_linked_to">Linked to: %1$s</string>
-    <string name="welcome_view_title">Welcome to Notable</string>
+    <string name="welcome_view_title">Welcome to Aragonite</string>
     <string name="welcome_view_subtitle">For optimal experience, please complete these setup steps:</string>
     <string name="welcome_view_file_access">File Access</string>
     <string name="welcome_view_file_access_explanation">Required for saving and loading your notes</string>
@@ -68,10 +68,10 @@
     <string name="welcome_view_permissions_button">Grant Permission</string>
     <string name="welcome_view_continue">Continue</string>
     <string name="welcome_view_complete_setup_first">Complete Setup First</string>
-    <string name="welcome_view_prevent_frozen">⚠️ Prevent Notable from Being Frozen (Onyx Devices)</string>
-    <string name="welcome_view_prevent_frozen_details">"Onyx devices may automatically freeze (kill) apps in the background to save battery. If you do not disable this feature, Notable will be constantly closed when in the background, which can be very annoying and may cause loss of work or interruptions. "</string>
+    <string name="welcome_view_prevent_frozen">⚠️ Prevent Aragonite from Being Frozen (Onyx Devices)</string>
+    <string name="welcome_view_prevent_frozen_details">"Onyx devices may automatically freeze (kill) apps in the background to save battery. If you do not disable this feature, Aragonite will be constantly closed when in the background, which can be very annoying and may cause loss of work or interruptions. "</string>
     <string name="welcome_view_prevent_frozen_instructions_title">How to prevent freezing:</string>
-    <string name="welcome_view_prevent_frozen_instructions">1. Long press the Notable app icon on the Onyx launcher (home screen).\n2. Select \"Unfreeze app\" from the menu.</string>
+    <string name="welcome_view_prevent_frozen_instructions">1. Long press the Aragonite app icon on the Onyx launcher (home screen).\n2. Select \"Unfreeze app\" from the menu.</string>
     <string name="welcome_view_prevent_frozen_recommended">This step is highly recommended for a smooth experience.</string>
     <string name="welcome_view_quick_start_title"><![CDATA[📖 Quick Start & Gestures Guide]]></string>
     <string name="welcome_view_quick_start_navigation">Navigation</string>
@@ -79,7 +79,7 @@
     <string name="welcome_view_quick_start_selection_editing_title"><![CDATA[Selection & Editing]]></string>
     <string name="welcome_view_quick_start_selection_editing_details"><![CDATA[• Hold & drag: Select items\n• Double tap: Undo\n• Double tap on selection: Copy\n• Drag selection: Move\n• Scribble to erase (if enabled)]]></string>
     <string name="welcome_view_quick_start_tips_title">Tips</string>
-    <string name="welcome_view_quick_start_tips_details">• Use \'Selection Export\' to quickly share images.\n• Tap the page number to quickly jump between pages.\n• Try enabling \'Scribble to Erase\' in Settings for natural erasing.\n• Double tap to undo, or on a selection to copy it.\n• You can use Notable as a live PDF viewer for LaTeX—see README.\n• You can customize gesture actions in Settings.</string>
+    <string name="welcome_view_quick_start_tips_details">• Use \'Selection Export\' to quickly share images.\n• Tap the page number to quickly jump between pages.\n• Try enabling \'Scribble to Erase\' in Settings for natural erasing.\n• Double tap to undo, or on a selection to copy it.\n• You can use Aragonite as a live PDF viewer for LaTeX—see README.\n• You can customize gesture actions in Settings.</string>
 
     <string name="export_page_to">Export page to %1$s</string>
     <string name="exporting_the_page_to">Exporting the page to %1$s…</string>

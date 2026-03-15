@@ -36,13 +36,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="notable" />
+                <data android:scheme="aragonite" />
             </intent-filter>
         </activity>
 
         <provider
             android:name="com.ethran.notable.editor.utils.Provider"
-            android:authorities="com.ethran.notable.provider"
+            android:authorities="io.aragonite.notes.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

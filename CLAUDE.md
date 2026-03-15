@@ -18,16 +18,16 @@ Fork of [Ethran/notable](https://github.com/Ethran/notable) — an alternative n
 
 Deploy and launch in one shot:
 ```bash
-./gradlew installDebug && adb shell am start -n com.ethran.notable/.MainActivity
+./gradlew installDebug && adb shell am start -n io.aragonite.notes/com.ethran.notable.MainActivity
 ```
 
 Useful ADB commands:
 ```bash
 adb devices                                           # Verify device connected
-adb logcat --pid=$(adb shell pidof com.ethran.notable) # App logs
+adb logcat --pid=$(adb shell pidof io.aragonite.notes) # App logs
 adb logcat -d | grep -A 20 "FATAL EXCEPTION"          # Crash stacktrace
-adb shell am force-stop com.ethran.notable             # Force stop
-adb uninstall com.ethran.notable                       # Uninstall
+adb shell am force-stop io.aragonite.notes             # Force stop
+adb uninstall io.aragonite.notes                       # Uninstall
 ```
 
 ### Release signing
@@ -108,7 +108,7 @@ Jetpack Compose Navigation with **no transitions** (e-ink displays cannot animat
 
 ## Important Properties
 
-- `applicationId`: `com.ethran.notable`
+- `applicationId`: `io.aragonite.notes`
 - `minSdk`: 29, `targetSdk`: 35, `compileSdk`: 36
 - `JVM target`: 17
 - `Gradle`: 9.1.0, `Kotlin`: 2.3.10, `AGP`: 9.0.0

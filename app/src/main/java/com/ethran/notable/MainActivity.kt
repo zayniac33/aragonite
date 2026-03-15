@@ -52,7 +52,7 @@ import javax.inject.Inject
 
 private const val TAG = "MainActivity"
 const val APP_SETTINGS_KEY = "APP_SETTINGS"
-const val PACKAGE_NAME = "com.ethran.notable"
+const val PACKAGE_NAME = "io.aragonite.notes"
 
 // TODO: Check if migrating to LocalConfiguration in Compose is good idea
 var SCREEN_WIDTH = EpdController.getEpdHeight().toInt()

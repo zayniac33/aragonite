@@ -24,7 +24,7 @@
     <string name="paginate_pdf">Podziel strony przy eksporcie</string>
     <string name="preview_pdf_pagination">Podgląd podziału stron</string>
 
-    <string name="app_new_version">Wygląda na to, że nowa wersja Notable jest dostępna na GitHubie!</string>
+    <string name="app_new_version">Wygląda na to, że nowa wersja Aragonite jest dostępna na GitHubie!</string>
     <string name="app_see_release">Zobacz wersję w przeglądarce</string>
     <string name="app_latest_version">Aplikacja jest aktualna.</string>
     <string name="app_check_updates">Sprawdź dostępność aktualizacji</string>
@@ -65,7 +65,7 @@
 
 
     <!-- Welcome / guide strings -->
-    <string name="welcome_view_title">Witaj w Notable!</string>
+    <string name="welcome_view_title">Witaj w Aragonite!</string>
     <string name="welcome_view_subtitle">Aby uzyskać najlepsze wrażenia, wykonaj kroki konfiguracji:</string>
     <string name="welcome_view_file_access">Dostęp do plików</string>
     <string name="welcome_view_file_access_explanation">Wymagane do zapisywania i ładowania notatek</string>
@@ -78,10 +78,10 @@
     <string name="welcome_view_continue">Kontynuuj</string>
     <string name="welcome_view_complete_setup_first">Najpierw zakończ konfigurację</string>
 
-    <string name="welcome_view_prevent_frozen">⚠️ Zapobiegaj zamrażaniu Notable (urządzenia Onyx)</string>
-    <string name="welcome_view_prevent_frozen_details">Urządzenia Onyx mogą automatycznie zamrażać (zamykać) aplikacje działające w tle, aby oszczędzać baterię. Jeśli nie wyłączysz tej funkcji, Notable będzie ciągle zamykany w tle, co może powodować utratę pracy.</string>
+    <string name="welcome_view_prevent_frozen">⚠️ Zapobiegaj zamrażaniu Aragonite (urządzenia Onyx)</string>
+    <string name="welcome_view_prevent_frozen_details">Urządzenia Onyx mogą automatycznie zamrażać (zamykać) aplikacje działające w tle, aby oszczędzać baterię. Jeśli nie wyłączysz tej funkcji, Aragonite będzie ciągle zamykany w tle, co może powodować utratę pracy.</string>
     <string name="welcome_view_prevent_frozen_instructions_title">Jak zapobiec zamrażaniu:</string>
-    <string name="welcome_view_prevent_frozen_instructions">1. Przytrzymaj ikonę Notable na launcherze Onyx (ekran główny).\n2. Wybierz &quot;Odmrizić&quot; z menu.</string>
+    <string name="welcome_view_prevent_frozen_instructions">1. Przytrzymaj ikonę Aragonite na launcherze Onyx (ekran główny).\n2. Wybierz &quot;Odmrizić&quot; z menu.</string>
     <string name="welcome_view_prevent_frozen_recommended">Ten krok jest wysoce zalecany dla płynnego działania.</string>
 
     <string name="welcome_view_quick_start_title"><![CDATA[📖 Szybki start i przewodnik gestów]]></string>
@@ -92,7 +92,7 @@
     <string name="welcome_view_quick_start_selection_editing_details"><![CDATA[• Przytrzymaj i przeciągnij: Zaznacz elementy\n• Podwójne stuknięcie: Cofnij\n• Podwójne stuknięcie na zaznaczeniu: Kopiuj\n• Przeciągnij zaznaczenie: Przenieś\n• Szkicuj, aby wymazać (jeśli włączone)]]></string>
 
     <string name="welcome_view_quick_start_tips_title">Wskazówki</string>
-    <string name="welcome_view_quick_start_tips_details">• Użyj  opcji eksportowania zanacznia, aby szybko udostępniać obrazy.\n• Stuknij numer strony, aby szybko przejść do wybranej strony.\n• Spróbuj włączyć  \'Zamaż aby usnąć\'(\'Scribble to Erase\') w Ustawieniach, aby naturalnie wymazywać.\n• Podwójne stuknięcie cofa, a podwójne stuknięcie na zaznaczeniu kopiuje je.\n• Możesz używać Notable jako podglądu PDF w czasie rzeczywistym dla LaTeX — zobacz README.\n• Możesz dostosować akcje gestów w Ustawieniach.</string>
+    <string name="welcome_view_quick_start_tips_details">• Użyj  opcji eksportowania zanacznia, aby szybko udostępniać obrazy.\n• Stuknij numer strony, aby szybko przejść do wybranej strony.\n• Spróbuj włączyć  \'Zamaż aby usnąć\'(\'Scribble to Erase\') w Ustawieniach, aby naturalnie wymazywać.\n• Podwójne stuknięcie cofa, a podwójne stuknięcie na zaznaczeniu kopiuje je.\n• Możesz używać Aragonite jako podglądu PDF w czasie rzeczywistym dla LaTeX — zobacz README.\n• Możesz dostosować akcje gestów w Ustawieniach.</string>
 
     <string name="export_page_to">Eksportuj stronę do %1$s</string>
     <string name="exporting_the_page_to">Eksportowanie strony do %1$s…</string>

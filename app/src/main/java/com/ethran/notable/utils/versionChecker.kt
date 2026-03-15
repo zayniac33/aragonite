@@ -121,7 +121,7 @@ fun getLatestPreReleaseTimestamp(owner: String, repo: String): Long? {
     val releases = jsonParser.decodeFromString<List<GitHubRelease>>(json)
     val preRelease = releases.firstOrNull { it.prerelease } ?: return null
 
-    val asset = preRelease.assets.firstOrNull { it.name == "notable-next.apk" } ?: return null
+    val asset = preRelease.assets.firstOrNull { it.name == "aragonite-next.apk" } ?: return null
 
     val formatter = DateTimeFormatter.ISO_DATE_TIME
     // 900 000ms = 15minutes, added to compensate for compilation time.
@@ -157,7 +157,7 @@ fun isLatestVersion(context: Context, force: Boolean = false): Boolean {
         val currentVersion = getCurrentVersionName(context)
 
         if (isNextBuild) {
-            val latestVersion = getLatestPreReleaseTimestamp("ethran", "notable")
+            val latestVersion = getLatestPreReleaseTimestamp("jdkruzr", "notable")
             //        // If either version is null, we can't compare them
             if (latestVersion == null || currentVersion == null) {
                 throw Exception("One of the version is null - comparison is impossible")
@@ -183,7 +183,7 @@ fun isLatestVersion(context: Context, force: Boolean = false): Boolean {
             }
             return isLatestVersion!!
         } else {
-            val latestVersion = getLatestReleaseVersion("ethran", "notable")
+            val latestVersion = getLatestReleaseVersion("jdkruzr", "notable")
             //        // If either version is null, we can't compare them
             if (latestVersion == null || currentVersion == null) {
                 throw Exception("One of the version is null - comparison is impossible")
