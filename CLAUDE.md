@@ -66,6 +66,19 @@ Two stacks of `OperationBlock` (max 5 blocks each). Operations are fully reversi
 
 Custom binary format in `data/db/Stroke.kt`: 9-byte header (magic, version, mask, count, compression), polyline-encoded coordinates, optional per-point data (pressure, tilt, dt). LZ4 compression when raw size ≥512 bytes and saves ≥25%.
 
+### SB1 Container Format (AC01)
+
+Page-level binary container in `io/Sb1ContainerWriter.kt` that wraps SB1-encoded strokes with metadata. Layout: 7-byte header (magic `AC`, version, flags) + 25-byte page metadata (viewport, content bounds, background enum, createdAt) + stroke entries (per-stroke metadata + verbatim SB1 point data). Used by Inbox Sync to export full-fidelity stroke data alongside JPG renders.
+
+### Inbox Sync (`io/InboxSyncEngine.kt`)
+
+Exports an inbox page to an Obsidian-compatible folder structure for external consumption. Orchestrated by `SyncState` (singleton, `Dispatchers.IO`). Per-note output folder at `<inboxPath>/<timestamp>/` contains:
+- `<timestamp>.md` — Markdown with YAML frontmatter (`created`, `tags`, `pages`, `source`) and `![[page-N.jpg]]` embeds. Written last (its presence signals sync completion to file watchers).
+- `page-N.jpg` — JPEG render at 85% quality via `ExportEngine.renderBitmapForPage()`.
+- `page-N.sb1` — AC01 container with all strokes and metadata.
+
+Attachment writes use graceful degradation: JPG or SB1 failure is logged but does not block markdown output. HWR text recognition uses `OnyxHWREngine` with annotation-aware diff logic to wrap `[[wiki links]]` and `#tags`.
+
 ### Navigation (`navigation/`)
 
 Jetpack Compose Navigation with **no transitions** (e-ink displays cannot animate). Routes: Library, Welcome, Editor, Pages, Settings, SystemInfo, BugReport. Uses SavedStateHandle for process-death survival. QuickNav for fast page preview.
@@ -120,7 +133,11 @@ Tests are primarily instrumented (run on device/emulator):
 - `app/src/androidTest/.../db/MigrationTest.kt` — Room migration validation
 - `app/src/androidTest/.../db/EncodingTest.kt` — Stroke encoding round-trip tests
 
-Unit tests are minimal. The emulator can test UI layout/navigation but not pen/stylus features or e-ink refresh behavior.
+Unit tests (`app/src/test/`) cover I/O logic that does not require Android framework:
+- `io/Sb1ContainerWriterTest.kt` — AC01 container binary format round-trip and edge cases
+- `io/InboxSyncEngineMarkdownTest.kt` — Markdown generation and per-note folder layout
+
+The emulator can test UI layout/navigation but not pen/stylus features or e-ink refresh behavior.
 
 ## Documentation
 
