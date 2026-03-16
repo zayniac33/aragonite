@@ -10,7 +10,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
-import com.ethran.notable.io.ExportEngine
 
 private val log = ShipBook.getLogger("SyncState")
 

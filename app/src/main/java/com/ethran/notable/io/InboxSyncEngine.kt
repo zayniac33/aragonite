@@ -12,7 +12,6 @@ import com.ethran.notable.data.db.AnnotationType
 import com.ethran.notable.data.db.Image
 import com.ethran.notable.data.db.Stroke
 import com.ethran.notable.data.datastore.GlobalAppSettings
-import com.ethran.notable.io.Sb1ContainerWriter
 import io.shipbook.shipbooksdk.ShipBook
 import java.io.File
 import java.io.FileOutputStream
