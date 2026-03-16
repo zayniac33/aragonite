@@ -87,8 +87,21 @@ object Sb1ContainerWriter {
         // Compute content bounds
         val contentBounds = computeContentBounds(strokes, images, viewportWidth, viewportHeight)
 
-        // Create byte array output stream to collect all data
-        val buffer = ByteBuffer.allocate(estimateTotalSize(strokes))
+        // Pre-encode all strokes to get their actual sizes
+        val encodedStrokes = strokes.map { stroke ->
+            val pointData = encodeStrokePoints(stroke.points)
+            stroke to pointData
+        }
+
+        // Calculate exact total size
+        val baseSize = 7 + 25 + 4  // header + metadata + strokeCount
+        val strokeDataSize = encodedStrokes.sumOf { (_, pointData) ->
+            2 + 11 + 4 + pointData.size  // metaSize + metadata + dataSize + pointData
+        }
+        val totalSize = baseSize + strokeDataSize
+
+        // Allocate buffer with exact size
+        val buffer = ByteBuffer.allocate(totalSize)
         buffer.order(ByteOrder.LITTLE_ENDIAN)
 
         // ========== Header (7 bytes) ==========
@@ -108,10 +121,7 @@ object Sb1ContainerWriter {
         // ========== Stroke data ==========
         buffer.putInt(strokes.size)  // strokeCount
 
-        for (stroke in strokes) {
-            // Encode point data first to get its size
-            val pointData = encodeStrokePoints(stroke.points)
-
+        for ((stroke, pointData) in encodedStrokes) {
             // Stroke metadata: fixed metaSize of 11
             buffer.putShort(11.toShort())
 
@@ -126,7 +136,7 @@ object Sb1ContainerWriter {
             buffer.put(pointData)
         }
 
-        // Trim to actual size and write to file
+        // Write to file
         buffer.flip()
         val data = ByteArray(buffer.remaining())
         buffer.get(data)
@@ -134,15 +144,5 @@ object Sb1ContainerWriter {
         FileOutputStream(file).use { fos ->
             fos.write(data)
         }
-    }
-
-    // ============== Helper ==============
-
-    private fun estimateTotalSize(strokes: List<Stroke>): Int {
-        // Conservative estimate: header (7) + metadata (25) + strokeCount (4)
-        // + per-stroke: metaSize (2) + metadata (11) + dataSize (4) + ~500 bytes avg
-        val baseSize = 7 + 25 + 4
-        val perStrokeEstimate = 2 + 11 + 4 + 500
-        return baseSize + (strokes.size * perStrokeEstimate)
     }
 }

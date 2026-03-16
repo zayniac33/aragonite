@@ -37,17 +37,6 @@ class Sb1ContainerWriterTest {
         }
     }
 
-    // ============== Helper Functions ==============
-
-    private fun readBytes(file: File): ByteArray {
-        return file.readBytes()
-    }
-
-    private fun readBytesAsBuffer(file: File): ByteBuffer {
-        val bytes = readBytes(file)
-        return ByteBuffer.wrap(bytes).order(ByteOrder.LITTLE_ENDIAN)
-    }
-
     // ============== AC3.1: Magic bytes, version, and flags ==============
 
     @Test
@@ -67,7 +56,7 @@ class Sb1ContainerWriterTest {
             viewportHeight = 1600
         )
 
-        val buffer = readBytesAsBuffer(testFile)
+        val buffer = ByteBuffer.wrap(testFile.readBytes()).order(ByteOrder.LITTLE_ENDIAN)
 
         // Read first 7 bytes: magic (2) + version (1) + flags (4)
         val magic0 = buffer.get().toInt() and 0xFF
@@ -103,7 +92,7 @@ class Sb1ContainerWriterTest {
             viewportHeight = viewportH
         )
 
-        val buffer = readBytesAsBuffer(testFile)
+        val buffer = ByteBuffer.wrap(testFile.readBytes()).order(ByteOrder.LITTLE_ENDIAN)
 
         // Skip header (7 bytes)
         buffer.position(7)
@@ -161,7 +150,7 @@ class Sb1ContainerWriterTest {
             viewportHeight = 1600
         )
 
-        val buffer = readBytesAsBuffer(testFile)
+        val buffer = ByteBuffer.wrap(testFile.readBytes()).order(ByteOrder.LITTLE_ENDIAN)
 
         // Skip header (7 bytes) + metadata (25 bytes) + strokeCount (4 bytes)
         buffer.position(7 + 25 + 4)
@@ -264,7 +253,7 @@ class Sb1ContainerWriterTest {
             viewportHeight = 1600
         )
 
-        val buffer = readBytesAsBuffer(testFile)
+        val buffer = ByteBuffer.wrap(testFile.readBytes()).order(ByteOrder.LITTLE_ENDIAN)
 
         // Read strokeCount at offset 36 (7 header + 25 metadata + 4 strokeCount position)
         buffer.position(7 + 25)
@@ -296,6 +285,9 @@ class Sb1ContainerWriterTest {
         }
 
         assertEquals(3, strokeIndex, "Should have read exactly 3 strokes")
+
+        // Verify buffer is fully consumed (no trailing garbage)
+        assertEquals(0, buffer.remaining(), "Buffer should be fully consumed after reading all strokes")
     }
 
     // ============== AC3.5: Empty stroke list ==============
@@ -317,7 +309,7 @@ class Sb1ContainerWriterTest {
             viewportHeight = 1600
         )
 
-        val bytes = readBytes(testFile)
+        val bytes = testFile.readBytes()
 
         // Expected size: 7 (header) + 25 (metadata) + 4 (strokeCount) = 36 bytes
         assertEquals(36, bytes.size, "File size should be exactly 36 bytes for empty container")
@@ -345,7 +337,7 @@ class Sb1ContainerWriterTest {
     }
 
     @Test
-    fun testComputeContentBoundsWithStrokes() {
+    fun testComputeContentBoundsStrokesSmallerThanViewport() {
         val stroke = Stroke(
             id = "stroke1",
             size = 5.0f,
