@@ -61,8 +61,9 @@ object OnyxHWREngine {
                 "com.onyx.android.ksync.service.KHwrService"
             )
         }
+        val appContext = context.applicationContext
         val bindStarted = try {
-            context.bindService(intent, connection, Context.BIND_AUTO_CREATE)
+            appContext.bindService(intent, connection, Context.BIND_AUTO_CREATE)
         } catch (e: Exception) {
             log.w("Failed to bind OnyxHWR service: ${e.message}")
             return false
@@ -78,7 +79,7 @@ object OnyxHWREngine {
     fun unbind(context: Context) {
         if (bound) {
             try {
-                context.unbindService(connection)
+                context.applicationContext.unbindService(connection)
             } catch (_: Exception) {}
             bound = false
             service = null
