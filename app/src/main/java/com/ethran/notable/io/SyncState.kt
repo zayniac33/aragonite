@@ -10,6 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import com.ethran.notable.io.ExportEngine
 
 private val log = ShipBook.getLogger("SyncState")
 
@@ -21,14 +22,15 @@ object SyncState {
         appRepository: AppRepository,
         pageId: String,
         tags: List<String>,
-        context: Context
+        context: Context,
+        exportEngine: ExportEngine
     ) {
         if (pageId in syncingPageIds) return
         syncingPageIds.add(pageId)
 
         scope.launch {
             try {
-                InboxSyncEngine.syncInboxPage(appRepository, pageId, tags, context)
+                InboxSyncEngine.syncInboxPage(appRepository, pageId, tags, context, exportEngine)
                 log.i("Background sync complete for page $pageId")
             } catch (e: Exception) {
                 log.e("Background sync failed for page $pageId: ${e.message}", e)

@@ -4,11 +4,15 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.RectF
 import android.os.Environment
+import com.ethran.notable.SCREEN_WIDTH
+import com.ethran.notable.SCREEN_HEIGHT
 import com.ethran.notable.data.AppRepository
 import com.ethran.notable.data.db.Annotation
 import com.ethran.notable.data.db.AnnotationType
+import com.ethran.notable.data.db.Image
 import com.ethran.notable.data.db.Stroke
 import com.ethran.notable.data.datastore.GlobalAppSettings
+import com.ethran.notable.io.Sb1ContainerWriter
 import io.shipbook.shipbooksdk.ShipBook
 import java.io.File
 import java.io.FileOutputStream
@@ -48,13 +52,15 @@ object InboxSyncEngine {
         appRepository: AppRepository,
         pageId: String,
         tags: List<String>,
-        context: Context
+        context: Context,
+        exportEngine: ExportEngine
     ) {
         log.i("Starting inbox sync for page $pageId with tags: $tags")
 
         val pageWithStrokes = appRepository.pageRepository.getWithStrokeById(pageId)
         val page = pageWithStrokes.page
         val allStrokes = pageWithStrokes.strokes
+        val images = appRepository.pageRepository.getWithImageById(pageId).images
         val annotations = appRepository.annotationRepository.getByPageId(pageId)
 
         if (allStrokes.isEmpty() && tags.isEmpty()) {
@@ -153,11 +159,38 @@ object InboxSyncEngine {
 
         val finalContent = fullText
 
-        val createdDate = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(page.createdAt)
-        val markdown = generateMarkdown(createdDate, tags, finalContent)
-
+        // --- Attachment writes (Phases 1-3 integration) ---
         val inboxPath = GlobalAppSettings.current.obsidianInboxPath
+        val createdDate = SimpleDateFormat("yyyy-MM-dd", Locale.US).format(page.createdAt)
+
+        // Create per-note folder first (Phase 3 helper)
         val noteDir = resolveNoteDir(page.createdAt, inboxPath)
+
+        // Phase 2: Render JPG (graceful degradation — AC1.3)
+        try {
+            val jpgFile = File(noteDir, "page-1.jpg")
+            writePageJpg(exportEngine, pageId, jpgFile)
+        } catch (e: Exception) {
+            log.e("Failed to render page JPG: ${e.message}", e)
+        }
+
+        // Phase 1: Write SB1 container (graceful degradation — AC1.4)
+        try {
+            val sb1File = File(noteDir, "page-1.sb1")
+            Sb1ContainerWriter.writeSb1Container(
+                file = sb1File,
+                page = page,
+                strokes = allStrokes,
+                images = images,
+                viewportWidth = SCREEN_WIDTH,
+                viewportHeight = SCREEN_HEIGHT
+            )
+        } catch (e: Exception) {
+            log.e("Failed to write SB1 container: ${e.message}", e)
+        }
+
+        // Generate and write markdown LAST (its presence signals sync completion to Obsidian file watchers)
+        val markdown = generateMarkdown(createdDate, tags, finalContent)
         writeMarkdownFile(markdown, page.createdAt, noteDir)
 
         log.i("Inbox sync complete for page $pageId")
