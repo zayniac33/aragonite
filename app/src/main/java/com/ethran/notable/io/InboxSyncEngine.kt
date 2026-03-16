@@ -284,7 +284,9 @@ object InboxSyncEngine {
     private fun generateMarkdown(
         createdDate: String,
         tags: List<String>,
-        content: String
+        content: String,
+        pages: Int = 1,
+        source: String = "aragonite"
     ): String {
         val sb = StringBuilder()
         sb.appendLine("---")
@@ -293,9 +295,16 @@ object InboxSyncEngine {
             sb.appendLine("tags:")
             tags.forEach { sb.appendLine("  - $it") }
         }
+        sb.appendLine("pages: $pages")
+        sb.appendLine("source: $source")
         sb.appendLine("---")
         sb.appendLine()
         sb.appendLine(content.trim())
+        sb.appendLine()
+        sb.appendLine("---")
+        for (i in 1..pages) {
+            sb.appendLine("![[page-$i.jpg]]")
+        }
         return sb.toString()
     }
 
