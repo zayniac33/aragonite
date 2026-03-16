@@ -282,7 +282,7 @@ object InboxSyncEngine {
         return result
     }
 
-    private fun generateMarkdown(
+    internal fun generateMarkdown(
         createdDate: String,
         tags: List<String>,
         content: String,
