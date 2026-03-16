@@ -157,7 +157,8 @@ object InboxSyncEngine {
         val markdown = generateMarkdown(createdDate, tags, finalContent)
 
         val inboxPath = GlobalAppSettings.current.obsidianInboxPath
-        writeMarkdownFile(markdown, page.createdAt, inboxPath)
+        val noteDir = resolveNoteDir(page.createdAt, inboxPath)
+        writeMarkdownFile(markdown, page.createdAt, noteDir)
 
         log.i("Inbox sync complete for page $pageId")
     }
@@ -308,18 +309,28 @@ object InboxSyncEngine {
         return sb.toString()
     }
 
-    private fun writeMarkdownFile(markdown: String, createdAt: Date, inboxPath: String) {
+    /**
+     * Resolve or create the per-note folder for a given timestamp.
+     * Returns the created [File] directory so Phase 4 can write sibling files (page images, SB1) into it.
+     */
+    internal fun resolveNoteDir(createdAt: Date, inboxPath: String): File {
         val timestamp = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.US).format(createdAt)
-        val fileName = "$timestamp.md"
 
-        val dir = if (inboxPath.startsWith("/")) {
+        val baseDir = if (inboxPath.startsWith("/")) {
             File(inboxPath)
         } else {
             File(Environment.getExternalStorageDirectory(), inboxPath)
         }
 
-        dir.mkdirs()
-        val file = File(dir, fileName)
+        val noteDir = File(baseDir, timestamp)
+        noteDir.mkdirs()
+        return noteDir
+    }
+
+    private fun writeMarkdownFile(markdown: String, createdAt: Date, noteDir: File) {
+        val timestamp = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss", Locale.US).format(createdAt)
+        val fileName = "$timestamp.md"
+        val file = File(noteDir, fileName)
         file.writeText(markdown)
         log.i("Written inbox note to ${file.absolutePath}")
     }
