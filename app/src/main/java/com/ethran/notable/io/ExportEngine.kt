@@ -386,7 +386,7 @@ class ExportEngine @Inject constructor(
         }
     }
 
-    private suspend fun renderBitmapForPage(pageId: String): Bitmap {
+    internal suspend fun renderBitmapForPage(pageId: String): Bitmap {
         ensureNotMainThread("ExportBitmap")
         val data = fetchPageData(pageId)
         val (contentWidth, contentHeight) = computeContentDimensions(data)
