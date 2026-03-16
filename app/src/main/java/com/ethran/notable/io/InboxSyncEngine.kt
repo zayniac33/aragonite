@@ -1,6 +1,7 @@
 package com.ethran.notable.io
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.RectF
 import android.os.Environment
 import com.ethran.notable.data.AppRepository
@@ -10,6 +11,7 @@ import com.ethran.notable.data.db.Stroke
 import com.ethran.notable.data.datastore.GlobalAppSettings
 import io.shipbook.shipbooksdk.ShipBook
 import java.io.File
+import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -17,6 +19,25 @@ import java.util.Locale
 private val log = ShipBook.getLogger("InboxSyncEngine")
 
 object InboxSyncEngine {
+
+    /**
+     * Render a page bitmap and compress it to JPEG at 85% quality.
+     * Automatically recycles the bitmap to prevent memory leaks.
+     */
+    private suspend fun writePageJpg(
+        exportEngine: ExportEngine,
+        pageId: String,
+        outputFile: File
+    ) {
+        val bitmap = exportEngine.renderBitmapForPage(pageId)
+        try {
+            FileOutputStream(outputFile).use { fos ->
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 85, fos)
+            }
+        } finally {
+            bitmap.recycle()
+        }
+    }
 
     /**
      * Sync an inbox page to Obsidian. Tags come from the UI (pill selection),
